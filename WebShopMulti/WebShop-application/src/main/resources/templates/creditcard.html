@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="style/style.css" />
+<title>Your credit card information</title>
+<style>
+body  {
+     background-image: url('/resources/img/tommy.jpg');
+  background-repeat: no-repeat;
+  background-position: ;
+background-size: 100%;
+}
+</style>
+<script>
+function fillSelects() {
+	var idM = document.getElementById("month-select");
+	var idY = document.getElementById("year-select");
+	for (var i = 0 ; i < 10; i++) {
+		var opt = document.createElement("option");
+		opt.innerHTML=""+(2018+i);
+		idY.appendChild(opt);
+	}
+	changeSelect();
+}
+function changeSelect() {
+	var idY = document.getElementById("year-select");
+	var idM = document.getElementById("month-select");
+	while(true) {
+		var c = idM.firstChild;
+		if (c == null) {
+			break;
+		}
+		idM.removeChild(c);
+	}
+	var offset;
+	if (idY.selectedIndex == 0) {
+		offset = 10;
+	} else {
+		offset = 0;
+	}
+	for (var i = (offset+1) ; i <= 12; i++) {
+		var opt = document.createElement("option");
+		opt.innerHTML=""+i;
+		idM.appendChild(opt);
+	}
+}
+</script>
+</head>
+<body align="center" style="margin-top: 20%">
+	<h1 align="center">Please, enter your credit card details</h1>
+	
+	<form th:action="@{/paymentaccepted}" method="post">	
+	<table border="1" color="lightGray" align="center">
+		<tr>
+			<td> Card number :&nbsp; </td>
+			<td><input type="text" name="CardNumber" value=""
+				placeholder="10-digit number" maxlength="10" required="required" 
+				pattern="[0-9]{10}"></td>
+		</tr>
+		<tr>
+			<td>Expiration date :&nbsp;</td>
+			
+			<td>month :<select id="year-select" name="year" onChange="changeSelect()">
+				<option value="">month</option>			
+			</select> 
+			
+			year : <select name="year-select" id="year-select">
+					<option value="">year</option>	
+			</select>
+			
+			</td>
+		</tr>
+		<tr>
+			<td>Security code : &nbsp;</td>
+			<td><input type="text" placeholder="3-digit code" required="required"  maxlength="3" pattern="[0-9]{3}"></td>
+		</tr>
+	</table>
+	<br />
+	<table align="center">
+		<tr>
+		<!--  <td><input type="button" value="Proceed" onclick="window.location='/paymentaccepted'"/></td> -->	
+				
+		<td><input type="submit" value="Proceed"/> </td>
+			
+			<td><input type="button" value="Back" onclick="window.location='/'">
+	<!-- BACK btn --></td>
+		</tr>
+	</table>
+</body>
+</html>

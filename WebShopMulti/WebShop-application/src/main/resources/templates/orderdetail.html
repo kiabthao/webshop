@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Payment</title>
+<style>
+body  {
+     background-image: url('/resources/img/paiementcb.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+
+}
+</style>
+<script>
+	function pay() {
+		if (confirm("Confirm your payment")) { // if popUp confirmed
+			window.location = "/creditcard"; // redirection vers une autre page
+		} else { // if not confirmed
+			return;
+		}
+	}
+</script>
+</head>
+<body>
+
+
+	<h1 align="center">Your order details</h1>
+	<table border="1" width=70%>
+		<tr>
+			<th>Code</th>
+			<th>Label</th>
+			<th>Quantity</th>
+			<th>Unit price</th>
+			<th>Subtotal price</th>
+		</tr>
+
+		<tr>
+		<tr th:each="item: ${cartList}">
+
+			<td th:text="${item.code}" />
+			<td th:text="${item.label}" />
+			<td th:text="${item.quantity}" />
+			<td th:text="${item.price}" />
+			<td th:text="${item.price * item.quantity}" />
+
+			</td>
+
+		</tr>
+	</table>
+
+	<table>
+		<tr>
+			<td>Total :</td>
+			<!-- <td th:text="${#aggregates.sum(cartList.![item.price])}" />  -->
+			<td th:text="${total}" />
+		</tr>
+	</table>
+	<br />
+	<br />
+
+
+	<input type="button" value="Pay" onclick="pay()"
+		style="color: green; font-weight: bold">
+	<!-- PAY btn -->
+
+	<input type="submit" value="Back" onclick="window.location='/'"
+		style="color: red; font-weight: bold">
+	<!-- BACK btn -->
+
+
+</body>
+</html>
